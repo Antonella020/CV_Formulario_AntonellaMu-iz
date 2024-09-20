@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV-Antonella Muñiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-rows: auto auto auto;
+            grid-template-columns: 1fr 2fr;
+            grid-gap: 10px;
+            grid-template-areas: 
+                "header header"
+                "slidebar main"
+                "footer footer";
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .grid-item1 {
+            background: rgb(42, 41, 41);  
+            text-align: center ; 
+            color: white;
+            padding: 20px;
+            grid-area: header;
+        }
+        .grid-item2 {
+            background: rgb(255, 255, 255);  
+            text-align: left ; 
+            padding: 20px;
+            grid-area: slidebar;
+        }
+        .grid-item3 {
+            background: rgb(255, 255, 255);
+            text-align: left;
+            padding: 20px;
+            grid-area: main;
+        }
+        .grid-item4 {
+            background: rgb(240, 240, 240);
+            text-align: center;
+            padding: 10px;
+            grid-area: footer;
+        }
+        h2 {
+            border-bottom: 2px solid rgb(200, 200, 200);
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <!-- HEADER -->
+        <div class="grid-item1">
+            <h1>Formulario de CV Editable</h1>
+        </div>
+        
+        <!-- SLIDEBAR -->
+        <div class="grid-item2">
+            <form method="post" action="">
+
+                <!-- Nombre y Apellidos -->
+                <div>
+                    <h2>Nombre y Apellidos</h2>
+                    <input type="text" name="nombre" required>
+                </div>
+
+                <!-- Fecha de Nacimiento -->
+                <div>
+                    <h2>Fecha de Nacimiento</h2>
+                    <input type="date" name="fecha_nacimiento" required>
+                </div>
+
+                <!-- Ocupación -->
+                <div>
+                    <h2>Ocupación</h2>
+                    <input type="text" name="ocupacion" required>
+                </div>
+
+                <!-- Contacto -->
+                <div>
+                    <h2>Contacto</h2>
+                    <input type="text" name="telefono" placeholder="Teléfono" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+
+                <!-- Nacionalidad -->
+                <div>
+                    <h2>Nacionalidad</h2>
+                    <select name="nacionalidad">
+                        <option value="peruano">Peruano</option>
+                        <option value="chileno">Chileno</option>
+                        <option value="argentino">Argentino</option>
+                        <option value="colombiano">Colombiano</option>
+                    </select>
+                </div>
+
+                <!-- Nivel de Inglés -->
+                <div>
+                    <h2>Nivel de Inglés</h2>
+                    <label><input type="radio" name="nivel_ingles" value="basico" required>Básico</label>
+                    <label><input type="radio" name="nivel_ingles" value="intermedio">Intermedio</label>
+                    <label><input type="radio" name="nivel_ingles" value="avanzado">Avanzado</label>
+                    <label><input type="radio" name="nivel_ingles" value="fluido">Fluido</label>
+                </div>
+
+                <!-- Lenguajes de Programación -->
+                <div>
+                    <h2>Lenguajes de Programación</h2>
+                    <select name="lenguajes[]" multiple>
+                        <option value="php">PHP</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="java">Java</option>
+                    </select>
+                </div>
+
+                <!-- Aptitudes -->
+                <div>
+                    <h2>Aptitudes</h2>
+                    <input list="aptitudes" name="aptitud">
+                    <datalist id="aptitudes">
+                        <option value="Trabajo en equipo">
+                        <option value="Liderazgo">
+                        <option value="Creatividad">
+                    </datalist>
+                </div>
+
+                <!-- Habilidades -->
+                <div>
+                    <h2>Habilidades</h2>
+                    <label><input type="checkbox" name="habilidades[]" value="Acondicionamiento físico"> Acondicionamiento físico</label><br>
+                    <label><input type="checkbox" name="habilidades[]" value="Creación de videos deportivos"> Creación de videos deportivos</label>
+                </div>
+
+                <!-- Perfil -->
+                <div>
+                    <h2>Perfil</h2>
+                    <textarea name="perfil" rows="4" cols="50" placeholder="Describe tu perfil aquí..."></textarea>
+                </div>
+
+                <!-- Enviar Datos-->
+                <div>
+                    <input type="submit" value="Guardar">
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Experiencia-->
+        <div class="grid-item3">
+            <?php
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    $nombre = $_POST["nombre"];
+                    $fecha_nacimiento = $_POST["fecha_nacimiento"];
+                    $ocupacion = $_POST["ocupacion"];
+                    $telefono = $_POST["telefono"];
+                    $email = $_POST["email"];
+                    $nacionalidad = $_POST["nacionalidad"];
+                    $nivel_ingles = $_POST["nivel_ingles"];
+                    $lenguajes = implode(", ", $_POST["lenguajes"]);
+                    $aptitud = $_POST["aptitud"];
+                    $habilidades = implode(", ", $_POST["habilidades"]);
+                    $perfil = $_POST["perfil"];
+                    //EDICION DE CAMPOS con letras en negritas:
+                    echo "<h2>Datos Ingresados:</h2>";
+                    echo "<p><strong>Nombre:</strong> $nombre</p>";
+                    echo "<p><strong>Fecha de Nacimiento:</strong> $fecha_nacimiento</p>";
+                    echo "<p><strong>Ocupación:</strong> $ocupacion</p>";
+                    echo "<p><strong>Contacto:</strong> $telefono, $email</p>";
+                    echo "<p><strong>Nacionalidad:</strong> $nacionalidad</p>";
+                    echo "<p><strong>Nivel de Inglés:</strong> $nivel_ingles</p>";
+                    echo "<p><strong>Lenguajes de Programación:</strong> $lenguajes</p>";
+                    echo "<p><strong>Aptitud:</strong> $aptitud</p>";
+                    echo "<p><strong>Habilidades:</strong> $habilidades</p>";
+                    echo "<p><strong>Perfil:</strong> $perfil</p>";
+                }
+            ?>
+        </div>
+
+        <!-- Footer -->
+        <div class="grid-item4">
+            <p>Derechos Reservados - José Martínez</p>
+        </div>
+    </div>
+</body>
+</html>
